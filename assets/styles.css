@@ -1,5 +1,9 @@
 #searchCity {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+}
+
+#cardDaily {
+    font-weight: bold;
+    color: rgb(74, 144, 205);
 }

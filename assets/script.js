@@ -5,6 +5,7 @@ dayjs.extend(window.dayjs_plugin_timezone);
 
 var seachBtn = document.getElementById('cityInquire')
 
+// fetch weather and the lat/lon
 function getWeather(city) { 
     var geo = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=0410708d7855732d8c891d609ff8098b"
     fetch (geo) 
@@ -33,7 +34,6 @@ function getWeather(city) {
 // display current weather/date
 function getCurrent (city, data) {
     var time = data.current.dt
-    console.log(time)
     var date = dayjs().tz(data.timezone).format('M/D/YYYY')
     var displayWeather = document.getElementById('currentWeather')
     displayWeather.innerHTML = ""
@@ -45,23 +45,25 @@ function getCurrent (city, data) {
     var wind = document.createElement('p')
     var uv = document.createElement('p')
     var icon = document.createElement('img')
+
     weatherColumn.setAttribute('class', 'col-md')
     weatherCard.setAttribute('class', 'card-body')
     icon.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.current.weather[0].icon + '@2x.png')
     cityTitle.innerText = city + " " + date
     temp.innerText = data.current.temp + ' °F'
-    humidity.innerText = data.current.humidity + '%'
+    humidity.innerText = "Humidity: " + data.current.humidity + '%'
+    wind.innerText = "Wind: " + data.current.wind_speed + ' MPH'
+    uv.innerText = "UV index: " + data.current.uvi
     displayWeather.append(weatherColumn)
     weatherColumn.append(weatherCard)
-    weatherCard.append(cityTitle, icon, temp, humidity,)
+    weatherCard.append(cityTitle, icon, temp, humidity, wind, uv)
 }
 
 // display 5 day forcast, for loop [1-5], 
-
-
 function fiveDay(data) {
     var fiveDayDiv = document.getElementById('fiveDay')
     fiveDayDiv.innerHTML = ""
+    
     for(i = 1; i < 6; i++) {
     var fiveDayCol = document.createElement('div')
     fiveDayCol.setAttribute('class', 'col')
@@ -71,31 +73,34 @@ function fiveDay(data) {
     var tempDaily = document.createElement('p')
     var humidityDaily = document.createElement('p')
     var windDaily = document.createElement('p')
+    var uvDaily = document.createElement('p')
     icon.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.daily[i].weather[0].icon + '@2x.png')
-    humidityDaily.innerText = data.daily[i].humidity + '%'
-    fiveDayCol.append(date, icon, humidityDaily)
+    tempDaily.innerText = data.daily[i].temp.max + " °F"
+    humidityDaily.innerText = 'Humidity: ' + data.daily[i].humidity + '%'
+    windDaily.innerText = "Wind: " + data.daily[i].wind_speed + " MPH"
+    uvDaily.innerText = "UV index: " + data.daily[i].uvi
+    fiveDayCol.append(date, icon, tempDaily, humidityDaily, windDaily, uvDaily)
     fiveDayDiv.append(fiveDayCol)
     }
 }
 
+// search bar 
 seachBtn.addEventListener('click', function(event) {
     event.preventDefault();
     currentCity = document.getElementById('search-city').value
     getWeather(currentCity) 
 })
 
+// locally store searches
 function pastSearch(city) {
     cityArray.push(city)
     localStorage.setItem('city', JSON.stringify(cityArray))
 }
-// getCurrent()
+
+// default city
+getWeather("Milwaukee")
 
 
 // FUNCTIONS:
 // for loop, create btn, set text to cityArray[i], append btn to page, add event listener, event.target.value/ getWeather()
-
-
 // display search history, for loop array local storage, add event listener
-// save new city (local storage) search history
-// event listener for search button, get value from input, calling get weather with user value input, global var for current city displayed
-// create an icon date.current.weather[0].icon goes into http://openweathermap.org/img/wn/_________@2x.png
