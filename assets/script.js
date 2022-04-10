@@ -7,7 +7,7 @@ var seachBtn = document.getElementById('cityInquire')
 
 // fetch weather and the lat/lon
 function getWeather(city) { 
-    var geo = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=0410708d7855732d8c891d609ff8098b"
+    var geo = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=0410708d7855732d8c891d609ff8098b"
     fetch (geo) 
     .then (function (response) {
         return response.json();
