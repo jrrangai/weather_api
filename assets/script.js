@@ -1,4 +1,9 @@
 var currentCity = ""
+var cityArray = JSON.parse(localStorage.getItem('city'))?JSON.parse(localStorage.getItem('city')):[]
+dayjs.extend(window.dayjs_plugin_utc);
+dayjs.extend(window.dayjs_plugin_timezone);
+
+var seachBtn = document.getElementById('cityInquire')
 
 function getWeather(city) { 
     var geo = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=0410708d7855732d8c891d609ff8098b"
@@ -7,34 +12,89 @@ function getWeather(city) {
         return response.json();
     })
     .then ( function (data) {
-        var weather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data[0].lat + "&lon=" + data[0].lon + "&exclude=minutely,hourly,alerts&appid=0410708d7855732d8c891d609ff8098b"
+        var weather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data[0].lat + "&lon=" + data[0].lon + "&units=imperial&exclude=minutely,hourly,alerts&appid=0410708d7855732d8c891d609ff8098b"
         fetch (weather)
         .then (function (response){
             return response.json();
         })
         .then (function (data){
             console.log(data);
+            getCurrent(city, data);
+            fiveDay(data);
+            pastSearch(currentCity);
         })
         .catch(function (errors){
             if (errors) {
             alert("weather api not working") }
         })
-    }) 
-
-    .catch (function (errors) {
-        if (errors) {
-            alert("An error has occured")}
-        else {
-            console.log('All Good!')
-        }
     })
 }; 
 
-getWeather('Milwaukee');
+// display current weather/date
+function getCurrent (city, data) {
+    var time = data.current.dt
+    console.log(time)
+    var date = dayjs().tz(data.timezone).format('M/D/YYYY')
+    var displayWeather = document.getElementById('currentWeather')
+    displayWeather.innerHTML = ""
+    var weatherColumn = document.createElement('div')
+    var weatherCard = document.createElement('div')
+    var cityTitle = document.createElement('h2')
+    var temp = document.createElement('p')
+    var humidity = document.createElement('p')
+    var wind = document.createElement('p')
+    var uv = document.createElement('p')
+    var icon = document.createElement('img')
+    weatherColumn.setAttribute('class', 'col-md')
+    weatherCard.setAttribute('class', 'card-body')
+    icon.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.current.weather[0].icon + '@2x.png')
+    cityTitle.innerText = city + " " + date
+    temp.innerText = data.current.temp + ' °F'
+    humidity.innerText = data.current.humidity + '%'
+    displayWeather.append(weatherColumn)
+    weatherColumn.append(weatherCard)
+    weatherCard.append(cityTitle, icon, temp, humidity,)
+}
+
+// display 5 day forcast, for loop [1-5], 
+
+
+function fiveDay(data) {
+    var fiveDayDiv = document.getElementById('fiveDay')
+    fiveDayDiv.innerHTML = ""
+    for(i = 1; i < 6; i++) {
+    var fiveDayCol = document.createElement('div')
+    fiveDayCol.setAttribute('class', 'col')
+    var date = document.createElement('div')
+    var icon = document.createElement('img')
+    date.textContent = dayjs.unix(data.daily[i].dt).tz(data.timezone).format('M/D/YYYY')
+    var tempDaily = document.createElement('p')
+    var humidityDaily = document.createElement('p')
+    var windDaily = document.createElement('p')
+    icon.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.daily[i].weather[0].icon + '@2x.png')
+    humidityDaily.innerText = data.daily[i].humidity + '%'
+    fiveDayCol.append(date, icon, humidityDaily)
+    fiveDayDiv.append(fiveDayCol)
+    }
+}
+
+seachBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    currentCity = document.getElementById('search-city').value
+    getWeather(currentCity) 
+})
+
+function pastSearch(city) {
+    cityArray.push(city)
+    localStorage.setItem('city', JSON.stringify(cityArray))
+}
+// getCurrent()
+
 
 // FUNCTIONS:
-// display current weather
-// display 5 day forcast, for loop [1-5], 
+// for loop, create btn, set text to cityArray[i], append btn to page, add event listener, event.target.value/ getWeather()
+
+
 // display search history, for loop array local storage, add event listener
 // save new city (local storage) search history
 // event listener for search button, get value from input, calling get weather with user value input, global var for current city displayed

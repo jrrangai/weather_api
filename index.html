@@ -4,18 +4,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/styles.css">
-    <title>Document</title>
+    <title>Check Your Weather</title>
 </head>
 <body>
     <header> 
-        <h1>Weather Dashboard</h1>
+        <h1 class="jumbotron text-center text-white bg-primary">Weather Dashboard</h1>
     </header>
-    <form>
-        <h2>Search for a City: </h2>
-        
-    </form>
+  <div class="container">
+       <div class="row">
+            <form id="searchCity" class="col-lg-3">
+                <label type="text">Search for a city: </label> <br>
+                <input type="text" id="search-city"><br>
+                <input type="submit" class="btn btn-primary" id='cityInquire' value="Search"><br>
+            </form>
+            <section class="col-lg-9">
+                <div class="row" id="currentWeather"></div>
+                <div class="row" id="fiveDay"></div>
+            </section>
+       </div>
+  </div>
     <img>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
+    integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg=="
+    crossorigin="anonymous"
+  ></script>
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/utc.min.js" 
+    integrity="sha512-m00bfmYnAl3plEBlQfeQUhw/U2uvmw29V2+jxSWpAjankMWS+zAsjezbKWDEJNXqWq9o9qQZSOiA2RKDpa4D5w==" 
+    crossorigin="anonymous"
+  ></script>
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/timezone.min.js" 
+    integrity="sha512-pslqxxHAYPCxaSeFSmXXxDkLejD5dbFVC66aiVq0z4v7VTJBU+wqcG1OpNh4p3MjS2D6NCwz/H2QmSc7dXxryg==" 
+    crossorigin="anonymous"
+  ></script>
     <script src="./assets/script.js"></script>
 </body>
 </html>
