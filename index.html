@@ -14,12 +14,15 @@
     </header>
   <div class="container">
        <div class="row">
-            <form id="searchCity" class="col-lg-3">
-                <label type="text">Search for a city: </label> <br>
-                <input type="text" id="search-city"><br>
-                <input type="submit" class="btn btn-primary" id='cityInquire' value="Search"><br>
-            </form>
-            <section class="col-lg-9">
+              <div class="col-3">
+                <form id="searchCity">
+                    <label type="text">Search for a city: </label> <br>
+                    <input type="text" id="search-city"><br>
+                    <input type="submit" class="btn btn-primary" id='cityInquire' value="Search"><br>
+                </form>
+                <ul id="pastSearch"></ul>
+              </div>
+            <section class="col-9">
                 <div class="card border-primary row" id="currentWeather"></div> <br>
                 <h3 id="cardDaily">Five Day Forcast: </h3>
                 <div class="card-group card border-dark text-dark bg-info row" id="fiveDay"></div>

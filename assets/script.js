@@ -89,6 +89,15 @@ seachBtn.addEventListener('click', function(event) {
     event.preventDefault();
     currentCity = document.getElementById('search-city').value
     getWeather(currentCity) 
+    
+    var pastCities = document.getElementById('pastSearch');
+    var list = document.createElement('li');
+    var btn = document.createElement('button');
+    btn.setAttribute('type', 'button');
+    btn.innerText = document.querySelector('#search-city').value;
+    list.append(btn);
+    pastCities.append(list);
+    btn.classList.add('btn', 'btn-info', 'btn-outline-dark');
 })
 
 // locally store searches
@@ -97,10 +106,19 @@ function pastSearch(city) {
     localStorage.setItem('city', JSON.stringify(cityArray))
 }
 
+function loadCities() {
+    var pastCities = document.getElementById('pastSearch');
+    for(var i = 0; i < 5; i++) {
+        var list = document.createElement('li');
+        var btn = document.createElement('button');
+        btn.setAttribute('type', 'button');
+        btn.classList.add('btn', 'btn-info', 'btn-outline-dark')
+        btn.innerText = cityArray[i];
+        list.append(btn);
+        pastCities.append(list);
+    }
+}
+
 // default city
-getWeather("Milwaukee")
-
-
-// FUNCTIONS:
-// for loop, create btn, set text to cityArray[i], append btn to page, add event listener, event.target.value/ getWeather()
-// display search history, for loop array local storage, add event listener
+getWeather("Milwaukee");
+loadCities();
