@@ -13,3 +13,4 @@ https://jrrangai.github.io/weather_api/
 []THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
 []WHEN I click on a city in the search history
 []THEN I am again presented with current and future conditions for that city
+![weather dashboard screenshot](https://user-images.githubusercontent.com/99766422/162633591-bf4699d7-74f4-4e92-b7b3-d19d03345f92.png)
