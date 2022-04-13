@@ -88,6 +88,10 @@ function fiveDay(data) {
 seachBtn.addEventListener('click', function(event) {
     event.preventDefault();
     currentCity = document.getElementById('search-city').value
+    if (currentCity === '') {
+        alert('Must search a valid city!')
+        return;
+    } 
     getWeather(currentCity) 
     
     var pastCities = document.getElementById('pastSearch');
